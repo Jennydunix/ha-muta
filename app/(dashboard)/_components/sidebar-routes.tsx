@@ -1,9 +1,10 @@
 "use client";
 
-import { Compass, Layout } from "lucide-react";
+import { BarChart, Compass, Layout, List } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
+import { usePathname } from "next/navigation";
 
-const getRoutes = [
+const guestRoutes = [
   {
     icon: Layout,
     label: "Dashboard",
@@ -16,8 +17,25 @@ const getRoutes = [
   },
 ];
 
+const teacherRoutes = [
+  {
+    icon: List,
+    label: "Courses",
+    href: "/teacher/courses",
+  },
+  {
+    icon: BarChart,
+    label: "Analytics",
+    href: "/teacher/analytics",
+  },
+]
+
 export const SidebarRoutes = () => {
-  const routes = getRoutes;
+  const pathname = usePathname();
+
+  const isTeacherPage = pathname?.includes("/teacher");
+
+  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
   return (
     <div className="flex flex-col w-full">
       {routes.map((route) => (
